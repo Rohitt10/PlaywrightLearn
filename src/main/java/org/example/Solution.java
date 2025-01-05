@@ -38,4 +38,27 @@ class Solution {
         }
         return sum;
     }
+
+    public String shiftingLetters(String s, int[][] shifts) {
+        int[] a=new int[s.length()];
+        for(int[] query:shifts){
+            int valueAdded=query[2]==0?-1:1;
+            a[query[0]]+=valueAdded;
+            if(query[1]<a.length-1){
+                a[query[1]+1]-=valueAdded;
+            }
+        }
+        for(int i=1;i<a.length;i++){
+            a[i]+=a[i-1];
+        }
+        char[] resArray=new char[a.length];
+        for(int i=0;i<s.length();i++){
+            int value=a[i]%26;
+            if(value<0){
+                value=26+value;
+            }
+            resArray[i]=(char)('a'+(s.charAt(i)-'a'+value)%26);
+        }
+        return new String(resArray);
+    }
 }
